@@ -3,7 +3,7 @@ const slugify = require('slugify');
 const uniqueSlug = require('unique-slug');
 const mongoose = require('mongoose');
 const Blog = mongoose.model('Blog');
-const { getAccessToken } = require('./auth');
+const { getAccessToken, getAuth0User } = require('./auth');
 
 
 
@@ -25,9 +25,10 @@ exports.getBlogById = async (req, res) => {
 }
 exports.getBlogBySlug = async (req, res) => {
   const blog = await Blog.findOne({slug: req.params.slug})
-  getAccessToken((error, data) => {
-    return res.json(blog);
-  });
+  const { access_token } = await getAccessToken();
+  const user = await getAuth0User(access_token)(blog.userId);
+
+  return res.json({blog, user});
 }
 
 
