@@ -20,6 +20,7 @@ exports.createPortfolio = async (req, res) => {
   const userId = req.user.sub;
   const portfolio = new Portfolio(portfolioData);
   portfolio.userId = userId;
+  
   try {
     const newPortfolio = await portfolio.save();
     return res.json(newPortfolio);

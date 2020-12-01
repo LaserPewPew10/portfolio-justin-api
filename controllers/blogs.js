@@ -22,9 +22,13 @@ exports.getBlogs = async (req, res) => {
   return res.json(blogsWithUsers);
 }
 
+// just changed this on nov 30th
 exports.getBlogsByUser = async (req, res) => {
   const userId = req.user.sub;
-  const blogs = await Blog.find({userId});
+  const blogs = await Blog.find({
+    userId,
+    status: { $in: ['draft', 'published']}
+  });
   return res.json(blogs);
 }
 
@@ -33,6 +37,7 @@ exports.getBlogById = async (req, res) => {
   const blog = await Blog.findById(req.params.id);
   return res.json(blog);
 }
+
 exports.getBlogBySlug = async (req, res) => {
   const blog = await Blog.findOne({slug: req.params.slug})
   const { access_token } = await getAccessToken();
