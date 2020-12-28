@@ -12,10 +12,10 @@ exports.checkJwt = jwt({
     cache: true,
     rateLimit: true,
     jwksRequestsPerMinute: 10,
-    jwksUri: "https://justinramirez.us.auth0.com/.well-known/jwks.json",
+    jwksUri: `https://dev-mvtzh0mz.us.auth0.com/.well-known/jwks.json`,
   }),
-  audience: "https://justinramirez.us.auth0.com/api/v2/",
-  issuer: "https://justinramirez.us.auth0.com/",
+  audience: "https://dev-mvtzh0mz.us.auth0.com/api/v2/",
+  issuer: "https://dev-mvtzh0mz.us.auth0.com/",
   algorithms: ["RS256"],
 });
 exports.checkRole = (role) => (req, res, next) => {
